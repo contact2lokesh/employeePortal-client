@@ -22,3 +22,10 @@ export const editEmployee = (id, data) => {
     data
   });
 };  
+
+export const editStatusEmployee = (id,action,) => {
+  return request({
+    url: `api/employee/${id}/${action}`,
+    method: "PUT",
+  });
+};  

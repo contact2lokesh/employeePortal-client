@@ -3,12 +3,13 @@ import {GET_ALL_EMPLOYEE_PENDING,
     GET_ALL_EMPLOYEE_ERROR,
     ADD_EMPLOYEE_PENDING,
     ADD_EMPLOYEE_SUCCESS,
-    ADD_EMPLOYEE_ERROR,EDIT_EMPLOYEE_ERROR,EDIT_EMPLOYEE_PENDING,EDIT_EMPLOYEE_SUCCESS} from '../type';
+    ADD_EMPLOYEE_ERROR,EDIT_EMPLOYEE_ERROR,EDIT_EMPLOYEE_PENDING,EDIT_EMPLOYEE_SUCCESS, EDIT_EMPLOYEE_STATUS_PENDING, EDIT_EMPLOYEE_STATUS_SUCCESS, EDIT_EMPLOYEE_STATUS_ERROR} from '../type';
 
 const initialState = {
     employeeList: [],
     addEmployee:{},
     editEmployee:{},
+    editEmployeestatus:{},
 }
 
 export const employeeReducer = (
@@ -104,6 +105,36 @@ export const employeeReducer = (
     }
   };
  
+  export const editStatusEmployeeReducer = (
+    state = initialState,
+    { type, payload }
+  ) => {
+    switch (type) {
+      case EDIT_EMPLOYEE_STATUS_PENDING:
+        return {
+          ...state,
+          loading: true,
+          error: null,
+        };
+      case EDIT_EMPLOYEE_STATUS_SUCCESS:
+        return {
+          ...state,
+          loading: false,
+          editEmployeestatus: payload,
+          error: null,
+        };
+      case EDIT_EMPLOYEE_STATUS_ERROR:
+        return {
+          ...state,
+          loading: false,
+         editEmployeestatus:{},
+          error: payload,
+        };
+  
+      default:
+        return state;
+    }
+  };
 
 
 export default employeeReducer;

@@ -4,8 +4,8 @@ import {GET_ALL_EMPLOYEE_PENDING,
     ADD_EMPLOYEE_PENDING,
     ADD_EMPLOYEE_SUCCESS,
     ADD_EMPLOYEE_ERROR,
-  EDIT_EMPLOYEE_ERROR,EDIT_EMPLOYEE_PENDING,EDIT_EMPLOYEE_SUCCESS} from '../type';
-    import { addEmployee, editEmployee, getAllEmployee } from '../../components/api/api';
+  EDIT_EMPLOYEE_ERROR,EDIT_EMPLOYEE_PENDING,EDIT_EMPLOYEE_SUCCESS, EDIT_EMPLOYEE_STATUS_ERROR, EDIT_EMPLOYEE_STATUS_SUCCESS, EDIT_EMPLOYEE_STATUS_PENDING} from '../type';
+    import { addEmployee, editEmployee, editStatusEmployee, getAllEmployee } from '../../components/api/api';
 var Alert;
 
     export const getAllEmployeeAction = () => {
@@ -88,6 +88,34 @@ var Alert;
           Alert = { type: "error", isOpen: true, message: err.statusText };
         //   dispatch(closeLoader());
           dispatch({ type: EDIT_EMPLOYEE_ERROR, payload: Alert });
+        //   return dispatch(openGlobalSnackbar(err.statusText, true, "error"));
+        }
+      }
+    };
+  };
+
+  
+  export const editStatusEmployeeAction = (id,action) => {
+    return async (dispatch) => {
+      dispatch({ type: EDIT_EMPLOYEE_STATUS_PENDING, loading: true });
+      try {
+        const EmploeeResult = await editStatusEmployee(id,action);
+        return dispatch({
+          type: EDIT_EMPLOYEE_STATUS_SUCCESS,
+          payload: EmploeeResult,
+        });
+      } catch (err) {
+        if (!!err && !!err.response && !!err.response.data) {
+          dispatch({
+            type: EDIT_EMPLOYEE_STATUS_ERROR,
+            payload: err,
+          });
+        //   dispatch(closeLoader());
+        //   return dispatch(openGlobalSnackbar(err.message, true, "error"));
+        } else {
+          Alert = { type: "error", isOpen: true, message: err.statusText };
+        //   dispatch(closeLoader());
+          dispatch({ type: EDIT_EMPLOYEE_STATUS_ERROR, payload: Alert });
         //   return dispatch(openGlobalSnackbar(err.statusText, true, "error"));
         }
       }

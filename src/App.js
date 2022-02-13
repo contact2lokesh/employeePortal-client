@@ -12,9 +12,10 @@ const App = () =>{
       <ToastContainer/>
       <Navbaar/>
       <Routes>
-        <Route exact path="/" element={<Home/>}/>     
-        <Route exact path="/add" element={<AddEmployee/>}/>     
-        <Route exact path="/edit/:id" element={<EditEmpoyee/>}/>     
+        <Route exact path="/api/employees/" element={<Home/>}/>     
+        <Route exact path="/api/employee/add" element={<AddEmployee/>}/>     
+        <Route exact path="/edit/:id" element={<EditEmpoyee/>}/>   
+        <Route exact path="/api/employee/:id/:action" element={<Home/>}/>     
 
       </Routes>
         

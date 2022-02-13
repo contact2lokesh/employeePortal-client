@@ -1,12 +1,15 @@
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllEmployeeAction } from "../Redux/actions/action";
+import { editStatusEmployeeAction, getAllEmployeeAction } from "../Redux/actions/action";
 import { useEffect, useState } from "react";
+
 import React from "react";
 
 const Home = () => {
   const [employeeData, setEmployeeData] = useState([]);
+  // const [status, setStatus] = useState("activate");
   const dispatch = useDispatch();
+  const params = useParams();
 
   useEffect(() => {
     dispatch(getAllEmployeeAction());
@@ -20,23 +23,31 @@ const Home = () => {
     (state) => state.addEmployeeReducer.addEmployee
   );
 
+  const employeeStatus = useSelector(
+    (state) => state.editStatusEmployeeReducer.editEmployeestatus
+  )
+
   useEffect(() => {
     setEmployeeData(employeeDataCont);
   }, [employeeDataCont]);
 
   useEffect(() => {
     dispatch(getAllEmployeeAction());
-  }, [Addedemployee, dispatch]);
+  }, [Addedemployee, dispatch,employeeStatus]);
 
-  const activeEmpoyee = () => {
-    console.log("asdf");
-  };
   
+
+  useEffect(() => {
+    if (params.action) {
+      dispatch(editStatusEmployeeAction(params.id, params.action))
+    }
+  }, [window.location.pathname]);
+
   return (
     <div className="container">
       <div className="row">
         <div className="col-md-12 my-5 text-end">
-          <Link to="/add" className="btn btn-outline-dark">
+          <Link to="/api/employee/add" className="btn btn-outline-dark">
             Add Employee
           </Link>
         </div>
@@ -73,13 +84,16 @@ const Home = () => {
                         >
                           Edit
                         </Link>
-                        <button
-                          type="button"
-                          onClick={activeEmpoyee}
-                          className="btn btn-small btn-danger me-3"
+                        <Link
+                          to={
+                           employeeStatus.DeletedAt &&employeeStatus.DeletedAt !== null
+                           ? `/api/employee/${_id}/activate`
+                           : `/api/employee/${_id}/deactivate`
+                          } 
+                          className={emp.DeletedAt &&emp.DeletedAt !== null ? "btn btn-small btn-danger me-3" : "btn btn-small btn-primary me-3"}
                         >
                           Active/Deactive
-                        </button>
+                        </Link>
                       </td>
                     </tr>
                   );

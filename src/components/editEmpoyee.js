@@ -97,7 +97,7 @@ const EditEmpoyee = () => {
     };
     // console.log(data);
  dispatch(editEmployeeAction(id,data))
-    navigate("/");
+    navigate("/api/employees");
   };
   return (
     <div className="container">
@@ -239,7 +239,7 @@ const EditEmpoyee = () => {
                     value="Update Employee"
                     className="btn btn-primary"
                   />
-                  <Link to="/" className="btn btn-danger ms-3">
+                  <Link to="/api/employees" className="btn btn-danger ms-3">
                     Cancel
                   </Link>
                 </div>
