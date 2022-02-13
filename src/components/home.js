@@ -10,7 +10,7 @@ const Home = () => {
 
   useEffect(() => {
     dispatch(getAllEmployeeAction());
-  }, []);
+  }, [dispatch]);
 
   const employeeDataCont = useSelector(
     (state) => state.employeeReducer.employeeList
@@ -26,7 +26,7 @@ const Home = () => {
 
   useEffect(() => {
     dispatch(getAllEmployeeAction());
-  }, [Addedemployee]);
+  }, [Addedemployee, dispatch]);
 
   const activeEmpoyee = () => {
     console.log("asdf");
