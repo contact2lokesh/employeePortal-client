@@ -28,53 +28,40 @@ const EditEmpoyee = () => {
   //get Employee list//
   const employees = useSelector((state) => state.employeeReducer.employeeList);
   const dispatch = useDispatch();
+
   // render to home page
   const navigate = useNavigate();
 
   // edit employee through  id//
   const currentEmployee =
     employees && employees.find((employee) => employee._id === parseInt(id));
-   console.log(currentEmployee);
+  console.log(currentEmployee);
 
   // edit empolyee
   useEffect(() => {
-    if(currentEmployee){setFname(currentEmployee.fname);
-    setLname(currentEmployee.lname);
-    setEmail(currentEmployee.email);
-    setMobileNumber(currentEmployee.mobileNumber);
-    setGender(currentEmployee.gender);
-    setDesignation(currentEmployee.designation);
-    setDateOfJoining(currentEmployee.dateOfJoining);
-    setReportingManager(currentEmployee.reportingManager);
-    setSalary(currentEmployee.salary);
-    setEmployeeCode(currentEmployee.employeeCode);
-    setLocation(currentEmployee.location);
-    setState(currentEmployee.state);
-    setCountry(currentEmployee.country);
-    setDepartment(currentEmployee.department);}
+    if (currentEmployee) {
+      setFname(currentEmployee.fname);
+      setLname(currentEmployee.lname);
+      setEmail(currentEmployee.email);
+      setMobileNumber(currentEmployee.mobileNumber);
+      setGender(currentEmployee.gender);
+      setDesignation(currentEmployee.designation);
+      setDateOfJoining(currentEmployee.dateOfJoining);
+      setReportingManager(currentEmployee.reportingManager);
+      setSalary(currentEmployee.salary);
+      setEmployeeCode(currentEmployee.employeeCode);
+      setLocation(currentEmployee.location);
+      setState(currentEmployee.state);
+      setCountry(currentEmployee.country);
+      setDepartment(currentEmployee.department);
+    }
   }, [currentEmployee]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    //check email Exists or  not//
-    const checkEmail = employees.find((employee) => employee.email === email);
-    //   console.log(checkEmail);
-    // check Number Exists or  not
-    const checkMobileNumber = employees.find(
-      (employee) => employee.mobileNumber === parseInt(mobileNumber)
-    );
-    //   console.log(checkMobileNumber);
-
     if (!fname || !lname || !email || !mobileNumber) {
       return toast.warning("Please fill all the Fields!");
-    }
-
-    if (checkEmail) {
-      return toast.error("This email is already exists!");
-    }
-    if (checkMobileNumber) {
-      return toast.error("This Mobile Number is already exists!");
     }
 
     //Add data in store//
@@ -95,10 +82,12 @@ const EditEmpoyee = () => {
       country,
       department,
     };
-    // console.log(data);
- dispatch(editEmployeeAction(id,data))
+    dispatch(editEmployeeAction(id, data));
     navigate("/api/employees");
+
+    return toast.success("Employee edit Successfully!");
   };
+
   return (
     <div className="container">
       {currentEmployee ? (
@@ -164,7 +153,7 @@ const EditEmpoyee = () => {
                   />
                   <input
                     type="date"
-                    placeholder="Date of Joining"
+                    placeholder="Date of Joining : &nbsp;"
                     className="form-control my-3"
                     value={dateOfJoining}
                     onChange={(e) => {

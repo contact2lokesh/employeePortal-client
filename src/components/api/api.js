@@ -1,6 +1,6 @@
 import request from "./request";
 
-// get all Canvas api
+// get all Employee data
 export const getAllEmployee = () => {
   return request({
     url: `api/employees`,
@@ -8,6 +8,7 @@ export const getAllEmployee = () => {
   });
 };
 
+// add employees 
 export const addEmployee = (data) => {
   return request({
     url: `api/employee`,
@@ -15,6 +16,8 @@ export const addEmployee = (data) => {
     data
   });
 };
+
+// edit employees
 export const editEmployee = (id, data) => {
   return request({
     url: `api/employee/${id}`,
@@ -23,6 +26,7 @@ export const editEmployee = (id, data) => {
   });
 };  
 
+// update employee active/deactive status
 export const editStatusEmployee = (id,action,) => {
   return request({
     url: `api/employee/${id}/${action}`,

@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { addEmployeeAction } from "../Redux/actions/action";
 
 const AddEmployee = () => {
-  // validation store//
+  // validatio store//
   const [fname, setFname] = useState("");
   const [lname, setLname] = useState("");
   const [email, setEmail] = useState("");
@@ -27,22 +28,33 @@ const AddEmployee = () => {
 
   // render to home page
   const navigate = useNavigate();
-  // console.log(employees);
 
   // Form Validation//
   const handleSubmit = (e) => {
     e.preventDefault();
-
     //check email Exists or  not//
     const checkEmail = employees.find((employee) => employee.email === email);
-    //   console.log(checkEmail);
     // check Number Exists or  not
     const checkMobileNumber = employees.find(
       (employee) => employee.mobileNumber === parseInt(mobileNumber)
     );
-    console.log(checkMobileNumber);
 
-    if (!fname || !lname || !email || !mobileNumber) {
+    if (
+      !fname ||
+      !lname ||
+      !email ||
+      !mobileNumber ||
+      !gender ||
+      !designation ||
+      !dateOfJoining ||
+      !reportingManager ||
+      !salary ||
+      !employeeCode ||
+      !location ||
+      !state ||
+      !country ||
+      !department
+    ) {
       return toast.warning("Please fill all the Fields!");
     }
 
@@ -53,7 +65,7 @@ const AddEmployee = () => {
       return toast.error("This Mobile Number is already exists!");
     }
 
-    //Add data in store//
+    //gettinh data from input //
     const data = {
       id: employees.length,
       fname,
@@ -71,10 +83,11 @@ const AddEmployee = () => {
       country,
       department,
     };
-    // console.log(data);
+
     dispatch(addEmployeeAction(data));
 
     navigate("/api/employees");
+    return toast.success("Employee Added Successfully!");
   };
 
   return (
@@ -140,7 +153,7 @@ const AddEmployee = () => {
               />
               <input
                 type="date"
-                placeholder="Date of Joining"
+                placeholder="Date of Joining: &nbsp;"
                 className="form-control my-3"
                 value={dateOfJoining}
                 onChange={(e) => {
@@ -215,6 +228,9 @@ const AddEmployee = () => {
                 value="Add Employee"
                 className="btn btn-primary"
               />
+              <Link to="/api/employees" className="btn btn-danger ms-3">
+                Cancel
+              </Link>
             </div>
           </form>
         </div>

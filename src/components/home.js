@@ -1,13 +1,15 @@
 import { Link, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { editStatusEmployeeAction, getAllEmployeeAction } from "../Redux/actions/action";
+import {
+  editStatusEmployeeAction,
+  getAllEmployeeAction,
+} from "../Redux/actions/action";
 import { useEffect, useState } from "react";
 
 import React from "react";
 
 const Home = () => {
   const [employeeData, setEmployeeData] = useState([]);
-  // const [status, setStatus] = useState("activate");
   const dispatch = useDispatch();
   const params = useParams();
 
@@ -25,7 +27,7 @@ const Home = () => {
 
   const employeeStatus = useSelector(
     (state) => state.editStatusEmployeeReducer.editEmployeestatus
-  )
+  );
 
   useEffect(() => {
     setEmployeeData(employeeDataCont);
@@ -33,13 +35,11 @@ const Home = () => {
 
   useEffect(() => {
     dispatch(getAllEmployeeAction());
-  }, [Addedemployee, dispatch,employeeStatus]);
-
-  
+  }, [Addedemployee, dispatch, employeeStatus]);
 
   useEffect(() => {
     if (params.action) {
-      dispatch(editStatusEmployeeAction(params.id, params.action))
+      dispatch(editStatusEmployeeAction(params.id, params.action));
     }
   }, [window.location.pathname]);
 
@@ -86,11 +86,16 @@ const Home = () => {
                         </Link>
                         <Link
                           to={
-                           employeeStatus.DeletedAt &&employeeStatus.DeletedAt !== null
-                           ? `/api/employee/${_id}/activate`
-                           : `/api/employee/${_id}/deactivate`
-                          } 
-                          className={emp.DeletedAt &&emp.DeletedAt !== null ? "btn btn-small btn-danger me-3" : "btn btn-small btn-primary me-3"}
+                            employeeStatus.DeletedAt &&
+                            employeeStatus.DeletedAt !== null
+                              ? `/api/employee/${_id}/activate`
+                              : `/api/employee/${_id}/deactivate`
+                          }
+                          className={
+                            emp.DeletedAt && emp.DeletedAt !== null
+                              ? "btn btn-small btn-danger me-3"
+                              : "btn btn-small btn-primary me-3"
+                          }
                         >
                           Active/Deactive
                         </Link>
